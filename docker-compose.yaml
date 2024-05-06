@@ -1,0 +1,17 @@
+services:
+  mysql:
+    platform: linux/amd64
+    image: mysql:8.0.31
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'pass'
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"

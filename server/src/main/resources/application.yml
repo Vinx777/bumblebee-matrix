@@ -1,0 +1,74 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    session:
+      timeout: 2s
+  tomcat:
+    connection-timeout: 2s
+    threads:
+      min-spare: 20
+
+management:
+  health:
+    diskspace:
+      enabled: false
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,prometheus
+
+spring:
+  profiles:
+    active: ${SPRING_PROFILE:local}
+
+  datasource:
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 60
+      max-lifetime: 60000
+      connection-test-query: SELECT 1 FROM DUAL
+      connection-timeout: 2000
+      idle-timeout: 60000
+      validation-timeout: 1500
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/db1?useSSL=false
+    username: root
+    password: root
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    url: jdbc:mysql://localhost:3306/db1?useSSL=false
+    user: root
+    password: root
+    # table of flyway schema history table
+    table: bumblebee_schema_history
+    validate-on-migrate: false
+  servlet:
+    multipart:
+      max-file-size: 40MB
+      max-request-size: 50MB
+
+springdoc:
+  packages-to-scan:
+    - com.bumblebee
+  paths-to-match:
+    - /v1/**
+
+logging:
+  level:
+    org:
+      springframework:
+        security: WARN
+        cloud: WARN
+      apache:
+        kafka: WARN
+    com:
+      bumblebee: DEBUG
+  config: classpath:log/log4j2.xml
+
+environment: staging

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout
+                    charset="UTF-8"
+                    pattern="%d{HH:mm:ss.SSS} [%.20thread] %-5level [%X{uuid}] %logger{36} - %message{nolookups}%xThrowable{separator(|)}%n"
+            />
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>
